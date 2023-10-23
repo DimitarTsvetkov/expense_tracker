@@ -38,6 +38,8 @@ dependencies:
   uuid: ^4.1.0
   intl: ^0.18.1
   google_fonts: ^6.1.0
+  provider:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:

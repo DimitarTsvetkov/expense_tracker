@@ -14,16 +14,21 @@ class Expenses extends StatefulWidget {
 class _Expenses extends State<Expenses> {
   final List<Expense> _registeredExpenses = [
     Expense(
-        title: 'Flutter Course',
+        title: 'Gasoline',
         amount: 19.99,
         date: DateTime.now(),
-        category: Category.work),
+        category: Category.travel),
     Expense(
         title: 'Cinema',
         amount: 15.69,
         date: DateTime.now(),
         category: Category.leisure),
   ];
+  bool _isOn = true;
+
+  void toggle() {
+    setState(() => _isOn = !_isOn);
+  }
 
   void _openAddExpensesOverlay() {
     showModalBottomSheet(
@@ -76,12 +81,20 @@ class _Expenses extends State<Expenses> {
       );
     }
     return Scaffold(
-      appBar: AppBar(title: const Text('Personal Expense Tracker'), actions: [
-        IconButton(
-          onPressed: _openAddExpensesOverlay,
-          icon: const Icon(Icons.add),
-        ),
-      ]),
+      appBar: AppBar(
+        title: const Text('Personal Expense Tracker'),
+        actions: [
+          Switch(
+              value: _isOn,
+              onChanged: (val) {
+                toggle();
+              }),
+          IconButton(
+            onPressed: _openAddExpensesOverlay,
+            icon: const Icon(Icons.add),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           Chart(expenses: _registeredExpenses),
