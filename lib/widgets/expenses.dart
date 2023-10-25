@@ -70,6 +70,11 @@ class _Expenses extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQuery.of(context).size.width;
+    print(MediaQuery.of(context).size.width);
+    print(MediaQuery.of(context).size.height);
+    final width = MediaQuery.of(context).size.width;
+
     Widget mainContent = const Center(
       child: Text('No expenses found. Start adding some!'),
     );
@@ -81,26 +86,30 @@ class _Expenses extends State<Expenses> {
       );
     }
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Personal Expense Tracker'),
-        actions: [
-          Switch(
-              value: _isOn,
-              onChanged: (val) {
-                toggle();
-              }),
-          IconButton(
-            onPressed: _openAddExpensesOverlay,
-            icon: const Icon(Icons.add),
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          Chart(expenses: _registeredExpenses),
-          Expanded(child: mainContent),
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: const Text('Personal Expense Tracker'),
+          actions: [
+            Switch(
+                value: _isOn,
+                onChanged: (val) {
+                  toggle();
+                }),
+            IconButton(
+              onPressed: _openAddExpensesOverlay,
+              icon: const Icon(Icons.add),
+            ),
+          ],
+        ),
+        body: width < 600
+            ? Column(
+                children: [
+                  Chart(expenses: _registeredExpenses),
+                  Expanded(child: mainContent),
+                ],
+              )
+            : Row(children: [
+                Expanded(child: Chart(expenses: _registeredExpenses)),
+                Expanded(child: mainContent),
+              ]));
   }
 }
